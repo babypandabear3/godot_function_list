@@ -21,7 +21,7 @@ func refresh_list():
 		for i in range (current_textedit.get_line_count()):
 			string = current_textedit.get_line(i)
 			if string.find("func ") == 0:
-				arr.append(string.substr(5, string.length()) + " - " + str(i))
+				arr.append(string.substr(5, string.length()) + " - " + str(i+1))
 		arr.sort()
 		for i in arr:
 			dock.add_item(i)
@@ -98,7 +98,7 @@ func select_item(index):
 	if text.is_valid_integer():
 		newidx = text.to_int()
 	if newidx > -1:
-		current_textedit.cursor_set_line(newidx, true)
+		current_textedit.cursor_set_line(newidx-1, true)
 
 
 func select_tab(index):
