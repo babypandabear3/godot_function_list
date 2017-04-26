@@ -26,6 +26,8 @@ func refresh_list():
 		for i in arr:
 			dock.add_item(i)
 		
+		if dock.is_connected("item_selected", self, "select_item"):
+			dock.disconnect("item_selected", self, "select_item")
 		dock.connect("item_selected", self, "select_item")
 	
 
@@ -51,6 +53,8 @@ func get_current_textedit():
 				tab = i
 				
 		tab_container = tab
+		if tab_container.is_connected("tab_changed", self, "select_tab"):
+			tab_container.disconnect("tab_changed", self, "select_tab")
 		tab_container.connect("tab_changed", self, "select_tab")
 		current_tab = tab_container.get_current_tab_control()
 		children = current_tab.get_children()
@@ -59,7 +63,10 @@ func get_current_textedit():
 			if i.get_type() == "TextEdit":
 				ct = i
 		current_textedit = ct
-		current_textedit.connect("text_changed", self, "ct_text_changed")
+		if current_textedit.is_connected("text_changed", self, "ct_text_changed"):
+			current_textedit.disconnect("text_changed", self, "ct_text_changed")
+		if current_textedit != null:
+			current_textedit.connect("text_changed", self, "ct_text_changed")
 
 func ct_text_changed():
 	refresh_list()
